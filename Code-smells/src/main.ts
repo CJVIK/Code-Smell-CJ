@@ -13,7 +13,7 @@ function getTotalJumpLength(jumps: number[]): number {
 
   return jumps.reduce((sum, jump) => sum + jump, 0);
 }
-// Kommentar: totalNumber - överflödig variabel? kan inte detta göras direkt i returnen? 
+// Kommentar: totalNumber - överflödig variabel? kan inte detta göras direkt i returnen? En viss tydlighet men känns onödig.
 // jumpDistanceSoFar är inte ett bra namn? Vad representerar det? min tolkning är att det är summan av alla hopp?
 // Funktionen håller singel responsibility principen, vet ej hur jag optimerar mer. 
 /*
@@ -29,20 +29,21 @@ class Student {
 }
 
 function getStudentStatus(student: Student): string {
-  student.passed =
-    student.name == "Sebastian"
-      ? student.handedInOnTime
-        ? true
-        : false
-      : false;
+  // student.passed = student.name == "Sebastian" student.handedInOnTime ? true : false: false;
+  student.passed = student.name === "CJ" && student.handedInOnTime;
 
-  if (student.passed) {
-    return "VG";
-  } else {
-    return "IG";
-  }
+  return student.passed ? "VG" : "IG"; // Hittade en shorthand operator som jag inte visste om. "?"" förkortning för -> if och : är en förkortning för else.
+
+  // if (student.passed) {
+  //   return "VG";
+  // } else {
+  //   return "IG";
+  // }
 }
-// Kommentar: 
+// Kommentar: Min första tanke är varför har vi en passed variabel i student klassen?
+// borde inte detta vara en funktion som kollar om studenten har godkänt eller inte? Kanske en funktion som heter hasPassed()?
+// Sedan ser jag att det är en nested operator, vilket är svårläst - jag tycker det. Känns som en KISS principen behlövs här.
+// Skulle kan inte kunna skriva liknande som första exemplet? alltså skriva i returnen?
 /*
   3. Variabelnamn är viktiga. Kika igenom följande kod och gör om och rätt.
   Det finns flera code smells att identifiera här. Vissa är lurigare än andra.
