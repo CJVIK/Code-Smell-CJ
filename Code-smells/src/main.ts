@@ -4,16 +4,18 @@
   dessa hopplängder.
   */
 
-function getLength(jumpings: number[]): number {
-  let totalNumber = 0;
+function getTotalJumpLength(jumps: number[]): number {
+  //let totalNumber = 0; 
 
-  totalNumber = jumpings.reduce(
-    (jumpDistanceSoFar, currentJump) => jumpDistanceSoFar + currentJump
-  );
+  //totalNumber = jumps.reduce(
+  //  (jumpDistanceSoFar, currentJump) => jumpDistanceSoFar + currentJump 
+  //);
 
-  return totalNumber;
+  return jumps.reduce((sum, jump) => sum + jump, 0);
 }
-
+// Kommentar: totalNumber - överflödig variabel? kan inte detta göras direkt i returnen? 
+// jumpDistanceSoFar är inte ett bra namn? Vad representerar det? min tolkning är att det är summan av alla hopp?
+// Funktionen håller singel responsibility principen, vet ej hur jag optimerar mer. 
 /*
   2. I detta exempel har vi fokuserat på if-statements. Se om du kan göra exemplet bättre!
   */
@@ -40,7 +42,7 @@ function getStudentStatus(student: Student): string {
     return "IG";
   }
 }
-
+// Kommentar: 
 /*
   3. Variabelnamn är viktiga. Kika igenom följande kod och gör om och rätt.
   Det finns flera code smells att identifiera här. Vissa är lurigare än andra.
