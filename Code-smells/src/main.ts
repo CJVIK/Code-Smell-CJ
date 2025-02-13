@@ -67,6 +67,8 @@ function averageWeeklyTemperature(heights: Temp[]) {
   return r / 7;
 }
 // Kommentar: Variabelnamn är inte beskrivande, vad är r? vad är fan who? vad är heights?
+// Ah, nu ser jag det är en beräkning av medeltemperatur för en vecka. hence milisekunder. Borde man inte bryta ut det i variabler för tydlighet?
+//
 
 /*
   4. Följande funktion kommer att presentera ett objekt i dom:en. 
