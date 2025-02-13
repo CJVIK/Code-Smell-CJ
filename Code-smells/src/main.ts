@@ -161,17 +161,28 @@ function presentStudents(students: Student[]) {
   Lorem, ipsum, dolor, sit, amet
   Exemplet under löser problemet, men inte speciellt bra. Hur kan man göra istället?
   */
-function concatenateStrings() {
-  let result = "";
-  result += "Lorem";
-  result += "ipsum";
-  result += "dolor";
-  result += "sit";
-  result += "amet";
+// function concatenateStrings() {
+//   let result = "";
+//   result += "Lorem";
+//   result += "ipsum";
+//   result += "dolor";
+//   result += "sit";
+//   result += "amet";
 
-  return result;
+//   return result;
+// }
+let strings = ["Lorem", "ipsum", "dolor", "sit", "amet"];
+
+function concatenateStrings(strings: string[]): string {
+
+  return strings.join(", "); //mellanrummet är för att det ska bli en space mellan orden.
 }
 
+console.log(concatenateStrings(strings)); //output: Lorem, ipsum, dolor, sit, amet
+
+// Kommentar: Ahh detta måste vara string konkatenering(var tvungen att kolla upp vad det heter på svenska)
+// Kanske använda en array och join metoden?
+//frågan är om man borde använda en array eller en string? alltså att det är funktion som tar in en array och returnerar en string?
 /* 
 7. Denna funktion skall kontrollera att en användare är över 20 år och göra någonting.
     Det finns dock problem med denna typ av funktion. Vad händer när kraven ändras och
