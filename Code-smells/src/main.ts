@@ -66,6 +66,7 @@ function averageWeeklyTemperature(heights: Temp[]) {
 
   return r / 7;
 }
+// Kommentar: Variabelnamn är inte beskrivande, vad är r? vad är fan who? vad är heights?
 
 /*
   4. Följande funktion kommer att presentera ett objekt i dom:en. 
