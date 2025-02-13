@@ -54,17 +54,19 @@ class Temp {
 }
 
 function averageWeeklyTemperature(tempRecords: Temp[]) {
-  let totalTemp = 0;
-  const weekAgo = Date.now() - 604800000; // 604800000 är en vecka i milisekunder
+  let totalTemp = 0; //Fan nu gör jag samma fel som var i tidigare exempel.
+  const oneWeekAgoInMillisecounds = Date.now() - 604800000; // 604800000 är en vecka i milisekunder
   const week = 7;
 
   for (let i = 0; i < tempRecords.length; i++) {
     if (tempRecords[i].city === "Stockholm") {
-      if (tempRecords[i].measurementDate.getTime() > weekAgo) {
+      if (tempRecords[i].measurementDate.getTime() > oneWeekAgoInMillisecounds) {
         totalTemp += tempRecords[i].tempratureValue;
       }
     }
   }
+  const recentRecords = tempRecords.filter(record =>
+    record.city === "Stockholm" && record.measurementDate.getTime() > Date.now() - oneWeekAgoInMillisecounds); //alternativ lösning med filter
 
   // for (let who = 0; who < heights.length; who++) {
   //   if (heights[who].q === "Stockholm") {
@@ -73,41 +75,59 @@ function averageWeeklyTemperature(tempRecords: Temp[]) {
   //     }
   //   }
   // }
-
+  totalTemp = recentRecords.reduce((sum, temprecord) => sum + temprecord.tempratureValue, 0); //alternativ lösning med reduce
   return totalTemp / week;
 }
 // Kommentar: Variabelnamn är inte beskrivande, vad är r? vad är fan who? vad är heights?
 // Ah, nu ser jag det är en beräkning av medeltemperatur för en vecka. hence milisekunder. Borde man inte bryta ut det i variabler för tydlighet?
 // kan man kanske använda reduce? Samma sak här kan man ju skriva direkt i returnen?
+// 13:30 fan borde man inte kunna använda array methods för att filtrera ut stockholm?
+// Försökte uppdatera med en filter metod och en reduce metod.
 
 /*
   4. Följande funktion kommer att presentera ett objekt i dom:en. 
   Se om du kan göra det bättre. Inte bara presentationen räknas, även strukturer.
   */
+type Product = {
+  name: string;
+  price: number;
+  amount: number;
+  description: string;
+  image: string;
+  imageAlt: string;
+};
+const productBanana: Product = {
+  name: "Banan",
+  price: 10,
+  amount: 5,
+  description: "En gul banan",
+  image: "banan.jpg",
+  imageAlt: "Bild på en banan",
+};
 
-function showProduct(
-  name: string,
-  price: number,
-  amount: number,
-  description: string,
-  image: string,
-  parent: HTMLElement
-) {
+function createProductHTML(product: Product, parent: HTMLElement) {
   let container = document.createElement("div");
   let title = document.createElement("h4");
-  let pris = document.createElement("strong");
+  let priceTag = document.createElement("p");
+  let amountTag = document.createElement("p");
+  let descriptionTag = document.createElement("p");
   let imageTag = document.createElement("img");
 
-  title.innerHTML = name;
-  pris.innerHTML = price.toString();
-  imageTag.src = image;
+  title.innerHTML = `${product.name}`;
+  priceTag.innerHTML = `${product.price}`;
+  amountTag.innerHTML = `${product.amount}`;
+  descriptionTag.innerHTML = `${product.description}`;
+  imageTag.src = `${product.image}`;
+  imageTag.alt = `${product.imageAlt}`;
 
-  container.appendChild(title);
-  container.appendChild(imageTag);
-  container.appendChild(pris);
+
+  container.append(title, priceTag, imageTag, amountTag, descriptionTag);
   parent.appendChild(container);
 }
-
+createProductHTML(productBanana, document.body);
+// Kommentar: varför har vi en name; string osv inne i funktionen? borde inte detta vara en produkt klass?
+// För många appendChilds på olika rader?
+//
 /*
   5. Följande funktion kommer presentera studenter. Men det finns ett antal saker som 
   går att göra betydligt bättre. Gör om så många som du kan hitta!
