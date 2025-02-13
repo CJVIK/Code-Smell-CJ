@@ -50,25 +50,35 @@ function getStudentStatus(student: Student): string {
   */
 
 class Temp {
-  constructor(public q: string, public where: Date, public v: number) { }
+  constructor(public city: string, public measurementDate: Date, public tempratureValue: number) { } // Ändrade namn på variabler för att vara mer beskrivande.
 }
 
-function averageWeeklyTemperature(heights: Temp[]) {
-  let r = 0;
+function averageWeeklyTemperature(tempRecords: Temp[]) {
+  let totalTemp = 0;
+  const weekAgo = Date.now() - 604800000; // 604800000 är en vecka i milisekunder
+  const week = 7;
 
-  for (let who = 0; who < heights.length; who++) {
-    if (heights[who].q === "Stockholm") {
-      if (heights[who].where.getTime() > Date.now() - 604800000) {
-        r += heights[who].v;
+  for (let i = 0; i < tempRecords.length; i++) {
+    if (tempRecords[i].city === "Stockholm") {
+      if (tempRecords[i].measurementDate.getTime() > weekAgo) {
+        totalTemp += tempRecords[i].tempratureValue;
       }
     }
   }
 
-  return r / 7;
+  // for (let who = 0; who < heights.length; who++) {
+  //   if (heights[who].q === "Stockholm") {
+  //     if (heights[who].where.getTime() > Date.now() - 604800000) {
+  //       r += heights[who].v;
+  //     }
+  //   }
+  // }
+
+  return totalTemp / week;
 }
 // Kommentar: Variabelnamn är inte beskrivande, vad är r? vad är fan who? vad är heights?
 // Ah, nu ser jag det är en beräkning av medeltemperatur för en vecka. hence milisekunder. Borde man inte bryta ut det i variabler för tydlighet?
-//
+// kan man kanske använda reduce? Samma sak här kan man ju skriva direkt i returnen?
 
 /*
   4. Följande funktion kommer att presentera ett objekt i dom:en. 
