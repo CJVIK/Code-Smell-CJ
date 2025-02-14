@@ -132,30 +132,52 @@ createProductHTML(productBanana, document.body);
   5. Följande funktion kommer presentera studenter. Men det finns ett antal saker som 
   går att göra betydligt bättre. Gör om så många som du kan hitta!
   */
-function presentStudents(students: Student[]) {
+// function presentStudents(students: Student[]) {
+//   for (const student of students) {
+//     if (student.handedInOnTime) {
+//       let container = document.createElement("div");
+//       let checkbox = document.createElement("input");
+//       checkbox.type = "checkbox";
+//       checkbox.checked = true;
+
+//       container.appendChild(checkbox);
+//       let listOfStudents = document.querySelector("ul#passedstudents");
+//       listOfStudents?.appendChild(container);
+//     } else {
+//       let container = document.createElement("div");
+//       let checkbox = document.createElement("input");
+//       checkbox.type = "checkbox";
+//       checkbox.checked = false;
+
+//       container.appendChild(checkbox);
+//       let listOfStudents = document.querySelector("ul#failedstudents");
+//       listOfStudents?.appendChild(container);
+//     }
+//   }
+// }
+function createStudentElement(checked: boolean): HTMLElement {
+  let container = document.createElement("div");
+  let checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.checked = checked;
+
+  container.appendChild(checkbox);
+  return container;
+}
+
+function presentStudentsCheckList(students: Student[]) {
   for (const student of students) {
-    if (student.handedInOnTime) {
-      let container = document.createElement("div");
-      let checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.checked = true;
+    let listofStudents = student.handedInOnTime ? // shorthand operator för if else
+      document.querySelector("ul#passedstudents")
+      : document.querySelector("ul#failedstudents");
 
-      container.appendChild(checkbox);
-      let listOfStudents = document.querySelector("ul#passedstudents");
-      listOfStudents?.appendChild(container);
-    } else {
-      let container = document.createElement("div");
-      let checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.checked = false;
-
-      container.appendChild(checkbox);
-      let listOfStudents = document.querySelector("ul#failedstudents");
-      listOfStudents?.appendChild(container);
-    }
+    listofStudents?.appendChild(createStudentElement(student.handedInOnTime));
   }
 }
 
+// Kommentar: Hmm repetitiv kod med creating elements, kanske man kan göra en funktion som tar in en boolean som parameter och returnerar en checkbox?
+// Om jag förstår koden korrekt så är det 2 st listor som ska fyllas med studenter, en lista för de som har lämnat in i tid och en för de som inte har det.
+// 
 /*
   6. Skriv en funktion som skall slå ihop följande texter på ett bra sätt:
   Lorem, ipsum, dolor, sit, amet
