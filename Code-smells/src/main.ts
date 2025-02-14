@@ -189,33 +189,47 @@ console.log(concatenateStrings(strings)); //output: Lorem, ipsum, dolor, sit, am
     fler och fler parametrar behöver läggas till? T.ex. avatar eller adress. Hitta en bättre
     lösning som är hållbar och skalar bättre. 
 */
-interface User {
-  name: string;
-  birthday: Date;
-  email: string;
-  password: string;
-  avatar?: string;
-  address?: string;
+class User {
+  constructor(
+    public name: string,
+    public birthday: Date,
+    public email: string,
+    public password: string,
+    public avatar?: string,
+    public address?: string
+  ) { }
 }
-function createUser(
-  name: string,
-  birthday: Date,
-  email: string,
-  password: string
-) {
-  // Validation
-
-  let ageDiff = Date.now() - birthday.getTime();
-  let ageDate = new Date(ageDiff);
+function calculateAge(birthday: Date): number {
+  let ageDiffrence = Date.now() - birthday.getTime();
+  let ageDate = new Date(ageDiffrence);
   let userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+  return userAge;
+}
+
+function createUser(user: User) {
+  // Validation
+  let userAge = calculateAge(user.birthday);
+
+  // let ageDiffrence = Date.now() - user.birthday.getTime();
+  // let ageDate = new Date(ageDiffrence);
+  // let userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
 
   console.log(userAge);
 
-  if (!(userAge < 20)) {
+  if ((userAge < 20)) {
     // Logik för att skapa en användare
+    const errorMessage = "Du är under 20 år, nekad på SystemBolaget";
+    console.log(errorMessage);
+    throw new Error(errorMessage);
   } else {
-    return "Du är under 20 år";
+    console.log("Användaren är över 20 år, godkänd på SystemBolaget");
+    const newUser = new User(user.name, user.birthday, user.email, user.password, user.avatar, user.address);
+    console.log("User created:", newUser);
+    return newUser;
+
   }
 }
-// Kommentar: User borde var en type eller interface, för att bli modulär.
+// Kommentar: User borde var en type/class eller interface, för att bli modulär. och CreateUser borde ta in en User istället för flera parametrar??
 // Använda en ? för att göra det till en optional parameter?
+// frågan är att validering för ålder, borde det vara en egen funktion? eller ska det vara i createUser? borde vara en egen. Singel responsibility.
+// Det gör möhligt att lägga till fler valideringar om det behövs. Samt om ålder behöver ändras så är det bara att ändra i calculateAge funktionen.
