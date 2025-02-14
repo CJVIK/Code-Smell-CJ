@@ -189,6 +189,14 @@ console.log(concatenateStrings(strings)); //output: Lorem, ipsum, dolor, sit, am
     fler och fler parametrar behöver läggas till? T.ex. avatar eller adress. Hitta en bättre
     lösning som är hållbar och skalar bättre. 
 */
+interface User {
+  name: string;
+  birthday: Date;
+  email: string;
+  password: string;
+  avatar?: string;
+  address?: string;
+}
 function createUser(
   name: string,
   birthday: Date,
@@ -209,4 +217,5 @@ function createUser(
     return "Du är under 20 år";
   }
 }
-
+// Kommentar: User borde var en type eller interface, för att bli modulär.
+// Använda en ? för att göra det till en optional parameter?
